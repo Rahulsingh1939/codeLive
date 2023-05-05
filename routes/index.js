@@ -20,6 +20,9 @@ router.route('/contact')
     req.checkBody('name','Invalid Name').notEmpty();
     req.checkBody('email','Invalid Email').isEmail();
     req.checkBody('message','Empty Mesaage').notEmpty();
+    var errors=req.validationErrors();
+    
+
     res.render('thank',{ title : 'CodeLive - a Collaborative Coding platform.'})
   });
   

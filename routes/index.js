@@ -10,4 +10,14 @@ router.get('/', function(req, res, next) {
 router.get('/about', function(req,res,next){
   res.render('about',{ title:'CodeLive - a Collaborative Coding platform.'})
 })
+
+//Contact Page
+router.route('/contact')
+  .get(function(req,res,next){
+    res.render('contact',{ title : 'CodeLive - a Collaborative Coding platform.'})
+  })
+  .post(function(req,res,next){
+    res.render('thank',{ title : 'CodeLive - a Collaborative Coding platform.'})
+  });
+  
 module.exports = router;

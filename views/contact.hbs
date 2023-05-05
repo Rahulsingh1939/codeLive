@@ -2,6 +2,11 @@
 
 
 <form class="col-md-6" method="post">
+  {{#each errorMessages}}
+    <div class="alert alert-danger">
+        {{this.msg}}
+    </div>
+  {{/each}}
     <label>Name</label>
     <input class="form-control" placeholder="Your Name" name = "name" value = {{name}}>
   <div class="form-group">

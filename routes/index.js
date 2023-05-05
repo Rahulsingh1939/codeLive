@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const { body, validationResult } = require('express-validator');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,18 +17,19 @@ router.route('/contact')
   .get(function(req,res,next){
     res.render('contact',{ title : 'CodeLive - a Collaborative Coding platform.'})
   })
-  .post(function(req,res,next){
-    req.checkBody('name','Invalid Name').notEmpty();
-    req.checkBody('email','Invalid Email').isEmail();
-    req.checkBody('message','Empty Mesaage').notEmpty();
-    var errors=req.getValidationResult();
-    if(errors){
-      res.render('contact',{
-        title:'CodeLive - a Collaborative Coding platform.',
-        name:req.body.name,
-        email:req.body.email,
-        message:req.body.message,
-        errorMessage:errors
+  .post(async function (req, res) {
+    await body('name').notEmpty().withMessage('Invalid Name').run(req),
+    await body('email').isEmail().withMessage('Invalid Email').run(req),
+    await body('message').notEmpty().withMessage('Empty Message').run(req)
+    var errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      return res.render('contact', {
+        title: 'CodeLive - a Collaborative Coding platform.',
+        name: req.body.name,
+        email: req.body.email,
+        message: req.body.message,
+        errorMessages: errors.array()
       });
     } else{
       res.render('thank',{ title : 'CodeLive - a Collaborative Coding platform.'});

@@ -21,9 +21,17 @@ router.route('/contact')
     req.checkBody('email','Invalid Email').isEmail();
     req.checkBody('message','Empty Mesaage').notEmpty();
     var errors=req.validationErrors();
-    
-
-    res.render('thank',{ title : 'CodeLive - a Collaborative Coding platform.'})
-  });
+    if(errors){
+      res.render('contact',{
+        title:'CodeLive - a Collaborative Coding platform.',
+        name:req.body.name,
+        email:req.body.email,
+        message:req.body.message,
+        errorMessage:errors
+      });
+    } else{
+      res.render('thank',{ title : 'CodeLive - a Collaborative Coding platform.'});
+    }
+      });
   
 module.exports = router;

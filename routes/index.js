@@ -17,6 +17,9 @@ router.route('/contact')
     res.render('contact',{ title : 'CodeLive - a Collaborative Coding platform.'})
   })
   .post(function(req,res,next){
+    req.checkBody('name','Invalid Name').notEmpty();
+    req.checkBody('email','Invalid Email').isEmail();
+    req.checkBody('message','Empty Mesaage').notEmpty();
     res.render('thank',{ title : 'CodeLive - a Collaborative Coding platform.'})
   });
   

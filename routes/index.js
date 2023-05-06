@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const { body, validationResult } = require('express-validator');
 
+var nodemailer = require('nodemailer');
+var congif = require('../config/config.js');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'CodeLive - a Collaborative Coding platform.' });

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 
 //Login Page
 router.get('/login', function(req,res,next){
@@ -7,6 +8,7 @@ router.get('/login', function(req,res,next){
   });
   
   //Register Page
-  router.get('/register', function(req,res,next){
-    res.render('register',{ title : 'Login - CodeLive'})
+  router.rouite('/register')
+  .get( function(req,res,next){
+    res.render('register',{ title : 'Register - CodeLive'})
   });

@@ -32,7 +32,8 @@ app.use(cookieParser());
 app.use(session({
   secret: config.skey,
   resave:false,
-  saveUninitialized:true
+  saveUninitialized:true,
+  cookie:{secure:true}
 }))
 app.use(express.static(path.join(__dirname, 'public')));
 

@@ -8,5 +8,6 @@ module.export = {
             pass: 'demoBinaryRahul@gmail'
         }
     },
-    dbConnString:'mongodb://127.0.0.1:27017/codelive'
+    dbConnString:'mongodb://127.0.0.1:27017/codelive',
+    skey: 'mysecretkey'
 };

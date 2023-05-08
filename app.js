@@ -11,6 +11,9 @@ var config = require('./config/config.js');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+mongoose.connect(config.dbConnString);
+
+
 var app = express();
 
 // view engine setup

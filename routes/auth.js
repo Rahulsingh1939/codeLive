@@ -5,9 +5,15 @@ const { body, validationResult } = require('express-validator');
 
 
 //Login Page
-router.get('/login', function(req,res,next){
-    res.render('login',{ title : 'Login - CodeLive'})
-  });
+router.route('/login')
+  .get(function(req,res,next){
+      res.render('login',{ title : 'Login - CodeLive'})
+    })
+    .post(passport.authenticate('local', {
+      failureRedirect: '/login'
+    }), function (req, res) {
+      res.redirect('/');
+    });
   
   //Register Page
   router.route('/register')

@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var expressValidator = require('express-validator');
 
+var mongoose =require('mongoose');
+var config = require('./config/config.js');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 

@@ -8,7 +8,10 @@ router.get('/login', function(req,res,next){
   });
   
   //Register Page
-  router.rouite('/register')
+  router.route('/register')
   .get( function(req,res,next){
     res.render('register',{ title : 'Register - CodeLive'})
+  })
+  .post(function(req,res,next){
+    
   });

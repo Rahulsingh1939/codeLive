@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+const { body, validationResult } = require('express-validator');
+
 
 //Login Page
 router.get('/login', function(req,res,next){
@@ -12,30 +14,34 @@ router.get('/login', function(req,res,next){
   .get( function(req,res,next){
     res.render('register',{ title : 'Register - CodeLive'})
   })
-  .post(async function(req,res,next){
-    await body('name').notEmpty().withMessage('Invalid Name').run(req),
-    await body('email').isEmail().withMessage('Invalid Email').run(req),
-    await body('password').notEmpty().withMessage('Empty Password').run(req),
-    await body('password').notEmpty().equals(req.body.confirmPassword).withMessage('Password Do not match').run(req)
-    var errors = validationResult(req);
-    if (!errors.isEmpty()) {
+  .post(async function(req, res, next) {
+    try {
+      await body('name').notEmpty().withMessage('Invalid Name').run(req),
+      await body('email').isEmail().withMessage('Invalid Email').run(req),
+      await body('password').notEmpty().withMessage('Empty Password').run(req),
+      await body('password').notEmpty().equals(req.body.confirmPassword).withMessage('Password Do not match').run(req)
+      var errors = validationResult(req);
+      if (!errors.isEmpty()) {
         return res.render('register', {
-            title: 'Register - CodeLive',
-            name: req.body.name,
-            email: req.body.email,
-            errorMessages: errors.array()
+          title: 'Register - CodeLive',
+          name: req.body.name,
+          email: req.body.email,
+          errorMessages: errors.array()
         });
-        }else{
-            var user = new User();
-            user.name = req.body.name;
-            user.email = req.body.email;
-            user.setPassword(req.body.password);
-            user.save(function(err){
-                if(err){
-                    res.render('register', { title: 'Register - CodeLive', errorMessages: err });
-                } else{
-                    res.redirect('/login');
-                }
-            });
-        }
-        });
+      } else {
+        var user = new User();
+        user.name = req.body.name;
+        user.email = req.body.email;
+        user.setPassword(req.body.password);
+        user.save().then(() => {
+          res.redirect('/login');
+      }).catch((err) => {
+          res.render('register', { title: 'Register - CodeLive', errorMessages: err });
+      });
+      
+      }
+    } catch (err) {
+      next(err);
+    }
+  });
+  module.exports = router;

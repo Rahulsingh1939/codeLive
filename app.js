@@ -30,10 +30,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 app.use(session({
-  secret: config.skey,
+  secret: 'mysecretkey',
   resave:false,
-  saveUninitialized:true,
-  cookie:{secure:true}
+  saveUninitialized:true
 }));
 
 app.use(passport.initialize());
@@ -41,7 +40,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
+app.use('/', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

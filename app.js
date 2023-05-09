@@ -14,9 +14,11 @@ var config = require('./config/config.js');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
+var taskRouter = require('./routes/task');
 
 mongoose.connect('mongodb://127.0.0.1:27017/codelive');
 global.User= require('./models/user.js');
+global.Task= require('./models/task.js');
 
 var app = express();
 
@@ -48,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/', authRouter);
+app.use('/',taskRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

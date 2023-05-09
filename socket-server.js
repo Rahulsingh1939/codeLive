@@ -23,7 +23,6 @@ module.exports = function(server) {
               cb(false);
             });
 
-
         });
         roomList[data.room] = socketIOServer;
       }

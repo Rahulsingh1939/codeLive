@@ -6,29 +6,31 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-  User.findOne({_id: id}, function (err, user) {
-    done(err, user);
-  })
+  User.findOne({_id: id})
+    .then(function (user) {
+      done(null, user);
+    })
+    .catch(function (err) {
+      done(err);
+    });
 });
+
 
 passport.use(new LocalStrategy({
     usernameField: 'email'
   },
-  function (username, password, done) {
-    User.findOne({email: username}, function (err, done) {
-      if (err) return done(err);
+  async function (email, password, done) {
+    try {
+      const user = await User.findOne({ email: email });
       if (!user) {
-        return done(null, false, {
-          message: 'Incorrect username or password'
-        });
+        return done(null, false, { message: 'Incorrect email.' });
       }
       if (!user.validPassword(password)) {
-        return done(null, false, {
-          message: 'Incorrect username or password'
-        });
+        return done(null, false, { message: 'Incorrect password.' });
       }
-
       return done(null, user);
-    })
-  }
-));
+    } catch (err) {
+      return done(err);
+    }
+  }));
+

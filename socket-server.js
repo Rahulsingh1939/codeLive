@@ -15,13 +15,13 @@ module.exports = function(server) {
         var socketIOServer = new ot.EditorSocketIOServer(str, [], data.room, function(socket, cb) {
           var self = this;
           Task.findByIdAndUpdate(data.room, {content: self.document})
-  .then(() => {
-    cb(true);
-  })
-  .catch((err) => {
-    console.log(err);
-    cb(false);
-  });
+            .then(() => {
+              cb(true);
+            })
+            .catch((err) => {
+              console.log(err);
+              cb(false);
+            });
 
 
         });
